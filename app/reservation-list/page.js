@@ -1,5 +1,7 @@
-const ReservationList = () =>{
-    return <h1>Reservation List</h1>
-}
+const ReservationList = () => {
+  return (
+    <h1> ReservationList</h1>
+  );
+};
 
 export default ReservationList;
