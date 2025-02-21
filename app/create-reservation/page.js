@@ -1,5 +1,6 @@
 const CreateReservation = () =>{
-    return <h1>Create Reservation</h1>
+    return(<h1> not implemented yet</h1>
+    )
 }
 
 export default CreateReservation;
