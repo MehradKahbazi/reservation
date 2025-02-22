@@ -20,23 +20,31 @@ a {
 
 .content {
   padding: 7rem 0; }
+.btn-theme{
+  background-color: #ff6d00 !important;
+}
 
+.btn-theme:hover{
+  background-color: #f18837 !important;
+}
 h2 {
   font-size: 20px; }
 
 .custom-table {
-  min-width: 900px; }
+  min-width: 900px; 
+/* background-color: #ff6d00; */
+}
   .custom-table thead tr, .custom-table thead th {
     border-top: none;
     border-bottom: none !important; }
   .custom-table tbody th, .custom-table tbody td {
-    color: #777;
+    /* color: #777; */
     font-weight: 400;
     padding-bottom: 20px;
     padding-top: 20px;
     font-weight: 300; }
     .custom-table tbody th small, .custom-table tbody td small {
-      color: #b3b3b3;
+      /* color: #b3b3b3; */
       font-weight: 300; }
   .custom-table tbody .persons {
     padding: 0;
@@ -66,7 +74,7 @@ h2 {
       right: 0;
       position: absolute;
       height: 1px;
-      background: #bfbfbf;
+      background: #ff6d00;
       width: 100%;
       opacity: 0;
       visibility: hidden; }
@@ -155,7 +163,7 @@ h2 {
   }
 
   .search-wrapper {
-    background: white;
+    background: #ff6d00;
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.08);
     transition: all 0.3s ease;
@@ -163,7 +171,6 @@ h2 {
 
   .search-header {
     padding: 20px;
-    border-bottom: 1px solid #eee;
   }
 
   .search-input-group {
@@ -265,4 +272,69 @@ h2 {
     font-size: 0.8em;
     color: #666;
     margin-left: 5px;
+  }
+
+  /* reservation form */
+
+  .container{
+    margin-bottom:5%;
+  }
+  
+  #form-header{
+    margin-top:5%;
+    text-align:center;
+  }
+  
+  #form-tagline{
+    background: #ff6d00;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    color:#ffffff;
+    margin-top:5%;
+    padding-right: 0;
+    text-align:left;
+  }
+  
+  #form-tagline .fa{
+    margin-bottom:15%;
+  }
+  
+  #form-tagline h2 {
+    margin-bottom:15%;
+  }
+  
+  #form-content{
+    /* background: #ff6f0028; */
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius:0.5rem;
+    margin-top:5%;
+    padding: 3%;
+  }
+  
+  .form-group{
+    margin-top:5%;
+  }
+  
+  .contact{
+    padding: 4%;
+    height: 400px;
+  }
+  
+  .control-label{
+    font-size:16px;
+    font-weight:600;
+  }
+  
+  div .submit-button{
+    margin-top:3%;
+    text-align:right;
+  }
+  
+  button#submit{
+    white-space: normal;
+    width:auto;
+    background: #ff6d00;
+    color: #ffffff;
+    font-weight: 600;
+    width: 25%;
   }
