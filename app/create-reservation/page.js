@@ -1,17 +1,37 @@
-import { getHotels, storeHotels } from "@/lib/initdb";
+import { getHotels, getPassengers, storeHotels, storePassenger } from "@/lib/initdb";
+import { redirect } from "next/dist/server/api-utils";
 
 const CreateReservation = () =>{
 
-    const data = getHotels('new hotel')
-    console.log(data);
+    const data = getHotels()
+    
+    const res = getPassengers();
+    console.log(res);
+
+     async function createRecord (formData){
+        "use server";
+        const passengerName = formData.get('name');
+        const code = formData.get('reservationcode');
+        const count = formData.get('count');
+        const arrDate = formData.get('arrival');
+        const hotel = formData.get('hotel');
+        const depDate = formData.get('departure');
+        storePassenger({
+            passengerName,
+            count,
+            arrDate,
+            depDate,
+            code,
+            hotel: +hotel
+        })
+
+        // redirect('/reservation-list')
+    }
+
+
     return(
         <div className="container"> 
-        {/* <div className="row"> 
-          
-          <div id="form-header" className="col-12">
-            <h1 id="title">Hotel Survey Form</h1>
-          </div>
-        </div>  */}
+        
        
        <div className="row ">   
            <div id="form-tagline" className="col-md-4 shadow">
@@ -26,61 +46,77 @@ const CreateReservation = () =>{
           
                <div id="form-content" className="col-md-8 shadow card border-light-subtle">
              
-             <form id="survey-form" className="p-3"> 
+             <form id="survey-form" className="p-3" action={createRecord}> 
                                  
                  <div className="row form-group mb-3">
                     <div className="col-sm-3">
-                     <label id="name-label" className="control-label" htmlFor="name">*Name:</label>
+                     <label id="name-label" className="control-label" htmlFor="name">Full Name:</label>
                     </div>
                    
                     <div className="input-group col-sm-9">
                       <div className="input-group-prepend">
                       </div>                   
-                      <input id="name" type="text" className="form-control" placeholder="Please Enter Your Name" name="name" required />
+                      <input id="name" type="text" className="form-control" placeholder="Please Enter Full Name" name="name" required />
+                    </div>
+                 </div>
+                 <div className="row form-group mb-3">
+                    <div className="col-sm-3">
+                     <label id="name-label" className="control-label" htmlFor="reservationcode">Reservation Code:</label>
+                    </div>
+                   
+                    <div className="input-group col-sm-9">
+                      <div className="input-group-prepend">
+                      </div>                   
+                      <input id="reservationcode" type="text" className="form-control" placeholder="Please Enter Full Name" name="reservationcode" required />
                     </div>
                  </div>
                   
                  <div className="form-group row mb-3">
                     <div className="col-sm-3">
-                      <label id="email-label" className="control-label" htmlFor="email">*Email:</label>
+                      <label id="email-label" className="control-label" htmlFor="count">Passengers Count:</label>
                     </div>
                   
                     <div className="input-group col-sm-9">
                       <div className="input-group-prepend">
                       </div>
-                      <input type="email" className="form-control" id="email" placeholder="Enter Your Email" name="email" pattern="^[-+.\w]{1,64}@[-.\w]{1,64}\.[-.\w]{2,6}$" required/>
+                      <input type="text" className="form-control" id="count" name="count" />
                     </div>
                  </div>
                   
                  <div className="form-group row mb-3">
                     <div className="col-sm-3">
-                      <label id="number-label" className="control-label" htmlFor="email">*Room Number:</label>
+                      <label id="number-label" className="control-label" htmlFor="arrival">Arrival Date</label>
                     </div>
                   
                     <div className="input-group col-sm-9">
                       <div className="input-group-prepend">
                       </div>
-                      <input type="number" className="form-control" id="number" placeholder="Enter Your Room Number" name="number" min="1" max="125" required/>
+                      <input type="date" className="form-control" id="arrival"  name="arrival"  required/>
+                    </div>
+                  </div>
+                  <div className="form-group row mb-3">
+                    <div className="col-sm-3">
+                      <label id="number-label" className="control-label" htmlFor="departure">Deparure Date</label>
+                    </div>
+                  
+                    <div className="input-group col-sm-9">
+                      <div className="input-group-prepend">
+                      </div>
+                      <input type="date" className="form-control" id="departure"  name="departure"  required/>
                     </div>
                   </div>
                   
                  <div className="form-group row mb-3">    
                     <div className="col-sm-3">
-                      <label className="control-label"htmlFor="visit-purpose">Type of Trip:</label>
+                      <label className="control-label"htmlFor="visit-purpose">Hotel:</label>
                     </div>
                     
                     <div className="input-group col-sm-9">
                       <div className="input-group-prepend">
                       </div>
                       
-                      <select className="form-control" id="dropdown">
-                        <option>Business</option>
-                        <option>Couple</option>
-                        <option>Family</option>
-                        <option>Friends</option>
-                        <option>Solo</option>
-                        <option>Event</option>
-                        <option>Other</option>
+                      <select className="form-select" name="hotel" id="hotel">
+                        {data.map(item => <option defaultValue={item.hotel_id == 1 ? true : false} value={item.hotel_id} key={item.hotel_id}> {item.hotelname}</option>)}
                       </select>
                       
                     </div>     
