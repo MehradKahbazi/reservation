@@ -1,8 +1,8 @@
+import { verifyAuth } from "@/lib/auth";
 import { getHotels, getPassengers, storeHotels, storePassenger } from "@/lib/initdb";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from "next/navigation";
 
-const AddHotel = () =>{
-
+const AddHotel = async() =>{
 
      async function createRecord (formData){
         "use server";

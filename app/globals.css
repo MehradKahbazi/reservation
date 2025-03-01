@@ -338,3 +338,7 @@ h2 {
     font-weight: 600;
     width: 25%;
   }
+
+.bg-header{
+  background-color: #ff6d0082;
+}

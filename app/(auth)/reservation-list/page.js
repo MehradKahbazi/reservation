@@ -1,9 +1,9 @@
-import { getPassengers } from "@/lib/initdb";
+import UpdateButtons from "@/components/UpdateButtons";
+import { getPassengers, updatePassenger } from "@/lib/initdb";
 
 const ReservationList = () => {
 
   const data = getPassengers();
-  console.log(data);
   return (
     <div className="content">
     
@@ -55,8 +55,7 @@ const ReservationList = () => {
              <td>{item.departuredate}</td>
              <td>{item.hotelname}</td>
              <td>
-              <button className="btn btn-warning me-2">Lunch</button>
-              <button className="btn btn-primary">Dinner</button>
+              <UpdateButtons item={item} />
              </td>
             </tr>
               )

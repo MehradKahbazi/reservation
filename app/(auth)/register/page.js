@@ -1,11 +1,10 @@
 "use client";
 
-import { useFormState } from "react-dom";
-import { signin } from "@/actions/auth-actions";
+import { signup } from "@/actions/auth-actions";
 import { useActionState } from "react";
 
 const Login = () => {
-  const [formState, formAction] = useActionState(signin, {});
+  const [formState, formAction] = useActionState(signup, {});
   return (
     <section className="bg-light p-3 p-md-4 p-xl-5">
       <div className="container">
@@ -97,7 +96,7 @@ const Login = () => {
                       <div className="row">
                         <div className="col-12">
                           <div className="d-flex flex-column justify-content-md-center mt-5">
-                            {formState && formState.errors && Object.keys(formState.errors).map((error) => (
+                            {formState.errors && Object.keys(formState.errors).map((error) => (
                               <small key={error}>
                                 {formState.errors[error]}
                               </small>
