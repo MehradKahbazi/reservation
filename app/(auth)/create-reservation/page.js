@@ -2,6 +2,7 @@ import ReservationForm from "@/components/ReservationForm";
 import {
   getHotels,
   getPassengers,
+  getUsers,
   storeHotels,
   storePassenger,
 } from "@/lib/initdb";
@@ -16,8 +17,7 @@ const CreateReservation = async () => {
 
   const data = getHotels();
 
-  const res = getPassengers();
-  console.log(res);
+  
 
   
 

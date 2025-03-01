@@ -1,11 +1,37 @@
-import { updatePassenger } from "@/lib/initdb";
+'use client';
+
+import { updateMeal } from "@/actions/form-actions";
+import { ToastContainer, toast } from "react-toastify";
 
 const UpdateButtons = ({ item }) => {
-  const update = async(id, meal) => {
-    "use server";
-    console.log('test');
-    updatePassenger(id, meal);
-  };
+  const update = async(id, meal) =>{
+    const res = await updateMeal(id, meal)
+    if(res === 'success'){
+      toast.success(res,
+        {
+          position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              theme:'dark' 
+        }
+      )
+    } else{
+      toast.error(res,
+        {
+          position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              theme:'dark' 
+        }
+      )
+    }
+  }
 
   return (
     <form>
@@ -23,6 +49,7 @@ const UpdateButtons = ({ item }) => {
       >
         Dinner
       </button>
+      <ToastContainer />
     </form>
   );
 };

@@ -1,6 +1,8 @@
 "use server";
 
 import { storePassenger } from "@/lib/initdb";
+import { updatePassenger } from "@/lib/initdb";
+
 import { revalidatePath } from "next/cache";
 
 export async function createRecord(formData) {
@@ -23,3 +25,9 @@ export async function createRecord(formData) {
 
     // redirect('/reservation-list')
   }
+
+  export const updateMeal = async(id, meal) => {
+    console.log('test');
+    const res = await updatePassenger(id, meal);
+    return res;
+  };

@@ -3,8 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from "@/components/Navbar";
-import { ToastContainer } from "react-toastify";
-import ToastProvider from "@/components/ToastProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +29,6 @@ export default async function AuthLayout({ children }) {
         </header>
         {children}
         
-        {/* <ToastProvider toastStyle={{ backgroundColor: "crimson" }} /> */}
       </body>
     </html>
   );

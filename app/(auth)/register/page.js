@@ -2,9 +2,24 @@
 
 import { signup } from "@/actions/auth-actions";
 import { useActionState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
-const Login = () => {
-  const [formState, formAction] = useActionState(signup, {});
+const Register = () => {
+  // const [formState, formAction] = useActionState(signup, {});
+  const handleSubmit = async (formAction) =>{
+    const res = await signup(formAction);
+    toast.success(res,
+      {
+        position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            theme:'dark' 
+      }
+    )
+  }
   return (
     <section className="bg-light p-3 p-md-4 p-xl-5">
       <div className="container">
@@ -26,14 +41,12 @@ const Login = () => {
                       <div className="row">
                         <div className="col-12">
                           <div className="mb-5">
-                            <h4 className="text-center">
-                              Welcome back you've been missed!
-                            </h4>
+                            <h4 className="text-center">Add a New Admin</h4>
                           </div>
                         </div>
                       </div>
 
-                      <form action={formAction}>
+                      <form action={handleSubmit}>
                         <div className="row gy-3 overflow-hidden">
                           <div className="col-12">
                             <div className="form-floating mb-3">
@@ -65,20 +78,29 @@ const Login = () => {
                               </label>
                             </div>
                           </div>
-                          <div className="col-12">
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                name="remember_me"
-                                id="remember_me"
-                              />
+                          
+                          <div className="form-group row mb-3">
+                            <div className="col-sm-3">
                               <label
-                                className="form-check-label text-secondary"
-                                htmlFor="remember_me"
+                                className="control-label"
+                                htmlFor="role"
                               >
-                                Keep me logged in
+                                Role:
                               </label>
+                            </div>
+
+                            <div className="input-group col-sm-9">
+                              <div className="input-group-prepend"></div>
+
+                              <select
+                                className="form-select"
+                                name="role"
+                                id="role"
+                              >
+                                <option value="admin">Admin</option>
+                                <option value="cashier">Cashier</option>
+                                <option value="operator">Operator</option>
+                              </select>
                             </div>
                           </div>
                           <div className="col-12">
@@ -96,11 +118,12 @@ const Login = () => {
                       <div className="row">
                         <div className="col-12">
                           <div className="d-flex flex-column justify-content-md-center mt-5">
-                            {formState.errors && Object.keys(formState.errors).map((error) => (
-                              <small key={error}>
-                                {formState.errors[error]}
-                              </small>
-                            ))}
+                            {/* {formState.errors &&
+                              Object.keys(formState.errors).map((error) => (
+                                <small key={error}>
+                                  {formState.errors[error]}
+                                </small>
+                              ))} */}
                           </div>
                         </div>
                       </div>
@@ -112,8 +135,9 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 };
 
-export default Login;
+export default Register;
