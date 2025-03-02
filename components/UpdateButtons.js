@@ -7,13 +7,21 @@ import { useReactToPrint } from "react-to-print";
 import { useRef, useState } from "react";
 
 const UpdateButtons = ({ item }) => {
+  let today = new Date();
+  const time = today.toLocaleTimeString("it-IT");
+  today =
+    today.getFullYear() +
+    "-" +
+    today.toLocaleDateString(undefined, { month: "2-digit" }) +
+    "-" +
+    today.toLocaleDateString(undefined, { day: "2-digit" });
   const [meal, setMeal] = useState('')
   const contentRef = useRef(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
   const update = async (id, uMeal) => {
     const res = await updateMeal(id, uMeal);
-    setMeal(uMeal)
     if (res === "success") {
+      setMeal(uMeal)
       Swal.fire({
         title: "Success!",
         html: `
@@ -59,27 +67,29 @@ const UpdateButtons = ({ item }) => {
         draggable: true,
         theme: "dark",
       });
+      setMeal('');
+
     }
   };
-
+console.log(today, item.lastLunch);
   return (
     <form>
       <button
         className="btn btn-warning me-2"
-        disabled={item.getlunch === "true" ? true : false}
+        disabled={item.lastLunch === today ? true : false}
         formAction={update.bind(null, item.passenger_id, "lunch")}
       >
         Lunch
       </button>
       <button
         className="btn btn-primary"
-        disabled={item.getdinner === "true" ? true : false}
+        disabled={item.lastdinner === today ? true : false}
         formAction={update.bind(null, item.passenger_id, "dinner")}
       >
         Dinner
       </button>
       <ToastContainer />
-      <table className={`table custom-table position-absolute ${meal ? 'd-block' : 'd-none'}`} style={{top: '-100px'}} ref={contentRef}>
+      <table className={`table custom-table position-absolute ${meal ? 'd-block' : 'd-none'}`} style={{top: '-100000px'}} ref={contentRef}>
           <thead>
             <tr>
               <th scope="col">Full Name</th>
