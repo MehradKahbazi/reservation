@@ -4,18 +4,20 @@ import { updateMeal } from "@/actions/form-actions";
 import { ToastContainer, toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useReactToPrint } from "react-to-print";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const UpdateButtons = ({ item }) => {
-  // const contentRef = useRef(null);
-  // const reactToPrintFn = useReactToPrint({ contentRef });
-  const update = async (id, meal) => {
-    const res = await updateMeal(id, meal);
+  const [meal, setMeal] = useState('')
+  const contentRef = useRef(null);
+  const reactToPrintFn = useReactToPrint({ contentRef });
+  const update = async (id, uMeal) => {
+    const res = await updateMeal(id, uMeal);
+    setMeal(uMeal)
     if (res === "success") {
       Swal.fire({
         title: "Success!",
         html: `
-        <table className="table custom-table" id="printTable">
+        <table className="table custom-table" ref={${contentRef}}>
           <thead>
             <tr>
               <th scope="col">Full Name</th>
@@ -28,7 +30,7 @@ const UpdateButtons = ({ item }) => {
           <tbody>
                 <tr>
               <td>${item.fullname}</td>
-              <td>${meal}</td>
+              <td>${uMeal}</td>
               <td>
                 ${item.reservationcode}
               </td>
@@ -43,7 +45,8 @@ const UpdateButtons = ({ item }) => {
         showCloseButton: true,
         showLoaderOnConfirm: true,
         preConfirm: async () => {
-          
+          await reactToPrintFn();
+          setMeal('');
         },
       });
     } else {
@@ -76,6 +79,28 @@ const UpdateButtons = ({ item }) => {
         Dinner
       </button>
       <ToastContainer />
+      <table className={`table custom-table ${meal ? 'd-block' : 'd-none'}`} ref={contentRef}>
+          <thead>
+            <tr>
+              <th scope="col">Full Name</th>
+              <th scope="col">Meal</th>
+              <th scope="col">Reservation Code</th>
+              <th scope="col">Count</th>
+              <th scope="col">Resturant</th>
+            </tr>
+          </thead>
+          <tbody>
+                <tr>
+              <td>{item.fullname}</td>
+              <td>{meal}</td>
+              <td>
+                {item.reservationcode}
+              </td>
+              <td>{item.count}</td>
+             <td> 51 Oak st.</td>
+            </tr>
+          </tbody>
+        </table>
     </form>
   );
 };
