@@ -79,7 +79,7 @@ const UpdateButtons = ({ item }) => {
         Dinner
       </button>
       <ToastContainer />
-      <table className={`table custom-table ${meal ? 'd-block' : 'd-none'}`} ref={contentRef}>
+      <table className={`table custom-table position-absolute ${meal ? 'd-block' : 'd-none'}`} style={{top: '-100px'}} ref={contentRef}>
           <thead>
             <tr>
               <th scope="col">Full Name</th>
