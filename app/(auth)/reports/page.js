@@ -1,5 +1,5 @@
 import TableAndSearch from "@/components/TableAndSearch";
-import { getLogs, getPassengers } from "@/lib/initdb";
+import { getLogs } from "@/lib/passengers"; 
 
 const Reports = () => {
   const data = getLogs();

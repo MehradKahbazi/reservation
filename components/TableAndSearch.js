@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import React, { useRef } from "react";
-import { DownloadTableExcel, useDownloadExcel } from "react-export-table-to-excel";
+import { useDownloadExcel } from "react-export-table-to-excel";
 
 const TableAndSearch = ({ data }) => {
   const [pageData, setPageData] = useState(data);

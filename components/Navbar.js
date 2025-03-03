@@ -1,6 +1,5 @@
 import { logout } from "@/actions/auth-actions";
 import { verifyAuth } from "@/lib/auth";
-import Link from "next/link";
 import NaveLinks from "./NavLinks";
 
 const Navbar = async () => {

@@ -1,7 +1,6 @@
 "use server";
 
-import { storePassenger } from "@/lib/initdb";
-import { updatePassenger } from "@/lib/initdb";
+import { storePassenger, updatePassenger } from "@/lib/passengers"; 
 
 import { revalidatePath } from "next/cache";
 

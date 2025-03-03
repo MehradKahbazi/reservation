@@ -1,7 +1,6 @@
 "use client";
 
 import { signup } from "@/actions/auth-actions";
-import { useActionState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {

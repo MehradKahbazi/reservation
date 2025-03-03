@@ -1,5 +1,5 @@
 import ReservationTable from "@/components/ReservationTable";
-import { getPassengers } from "@/lib/initdb";
+import { getPassengers } from "@/lib/passengers"; 
 
 const ReservationList = () => {
 

@@ -1,26 +1,10 @@
 import ReservationForm from "@/components/ReservationForm";
-import {
-  getHotels,
-  getPassengers,
-  getUsers,
-  storeHotels,
-  storePassenger,
-} from "@/lib/initdb";
+import { getHotels } from "@/lib/hotels"; 
 
 
 const CreateReservation = async () => {
-  // const result = await verifyAuth();
-  // console.log(result);
-  // if (!result.user) {
-  //   return redirect("/login");
-  // }
 
   const data = getHotels();
-
-  
-
-  
-
   return (
     <div className="container">
       <div className="row ">

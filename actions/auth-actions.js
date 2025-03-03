@@ -2,7 +2,7 @@
 
 import { createAuthSession, destroySession } from "@/lib/auth";
 import { hashUserPassword, verifyPassword } from "@/lib/hash";
-import { createUser, getUserByEmail } from "@/lib/initdb";
+import { createUser, getUserByEmail } from "@/lib/users"; 
 import { redirect } from "next/navigation";
 
 export const signup = async (formData) => {

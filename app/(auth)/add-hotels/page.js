@@ -1,10 +1,6 @@
 import { verifyAuth } from "@/lib/auth";
-import {
-  getHotels,
-  getPassengers,
-  storeHotels,
-  storePassenger,
-} from "@/lib/initdb";
+import { storeHotels } from "@/lib/hotels";
+
 import { redirect } from "next/navigation";
 
 const AddHotel = async () => {
