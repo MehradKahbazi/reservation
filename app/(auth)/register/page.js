@@ -50,7 +50,7 @@ const Register = () => {
                           <div className="col-12">
                             <div className="form-floating mb-3">
                               <input
-                                type="email"
+                                type="text"
                                 className="form-control"
                                 name="email"
                                 id="email"

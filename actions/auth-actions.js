@@ -21,6 +21,7 @@ export const signup = async (formData) => {
   }
 
   if (Object.keys(errors).length > 0) {
+    console.log(errors);
     return {
       errors,
     };
@@ -55,7 +56,7 @@ export const signin = async (prevState, formData) => {
     };
   }
 
-  createAuthSession(existingUser.id);
+  await createAuthSession(existingUser.id);
   if (existingUser.role === "admin") {
     redirect("/reservation-list?role=admin");
   } else if (existingUser.role === "operator") {

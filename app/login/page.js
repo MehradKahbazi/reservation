@@ -5,6 +5,7 @@ import { useActionState } from "react";
 
 const Login = () => {
   const [formState, formAction] = useActionState(signin, {});
+  
   return (
     <section className="bg-light p-3 p-md-4 p-xl-5">
       <div className="container">
@@ -38,7 +39,7 @@ const Login = () => {
                           <div className="col-12">
                             <div className="form-floating mb-3">
                               <input
-                                type="email"
+                                type="text"
                                 className="form-control"
                                 name="email"
                                 id="email"

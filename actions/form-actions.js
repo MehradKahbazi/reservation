@@ -1,6 +1,6 @@
 "use server";
 
-import { storePassenger, updatePassenger } from "@/lib/passengers"; 
+import { getLogs, storePassenger, updatePassenger } from "@/lib/passengers"; 
 
 import { revalidatePath } from "next/cache";
 
@@ -11,22 +11,32 @@ export async function createRecord(formData) {
     const arrDate = formData.get("arrival");
     const hotel = formData.get("hotel");
     const depDate = formData.get("departure");
-    storePassenger({
+    const agency = formData.get("agency");
+    const res = storePassenger({
       passengerName,
       count,
       arrDate,
       depDate,
       code,
       hotel: +hotel,
+      agency,
     });
     revalidatePath("/reservation-list");
-    return 'success'
+    if(res.message === 'success'){
+      return {message: 'success', id: res.id, passengerId: res.passengerId}
+    } else {
+      return{ message: 'exists', data: res.passenger}
+    }
 
     // redirect('/reservation-list')
   }
 
-  export const updateMeal = async(id, meal) => {
-    console.log('test');
-    const res = await updatePassenger(id, meal);
+  export const updateMeal = async(id, meal, value) => {
+    const res = updatePassenger(id, meal, value);
+    
     return res;
   };
+
+  export const getUserLogs = async(id) =>{
+    return getLogs(id);
+  }

@@ -1,9 +1,14 @@
 import ReservationForm from "@/components/ReservationForm";
+import { verifyAuth } from "@/lib/auth";
 import { getHotels } from "@/lib/hotels"; 
+import { redirect } from "next/navigation";
 
 
 const CreateReservation = async () => {
-
+  const result = await verifyAuth();
+  if(!result.session){
+    redirect('/login')
+  }
   const data = getHotels();
   return (
     <div className="container">

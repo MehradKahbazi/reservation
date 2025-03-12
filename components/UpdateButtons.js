@@ -1,63 +1,60 @@
 "use client";
 
 import { updateMeal } from "@/actions/form-actions";
-import { ToastContainer, toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { useReactToPrint } from "react-to-print";
-import { useRef, useState } from "react";
+import { getToday } from "@/lib/getToday";
 
 const UpdateButtons = ({ item }) => {
-  let today = new Date();
-  const time = today.toLocaleTimeString("it-IT");
-  today =
-    today.getFullYear() +
-    "-" +
-    today.toLocaleDateString(undefined, { month: "2-digit" }) +
-    "-" +
-    today.toLocaleDateString(undefined, { day: "2-digit" });
-  const [meal, setMeal] = useState('')
-  const contentRef = useRef(null);
-  const reactToPrintFn = useReactToPrint({ contentRef });
+  let today = getToday();
+
+  
   const update = async (id, uMeal) => {
-    const res = await updateMeal(id, uMeal);
-    if (res === "success") {
-      setMeal(uMeal)
-      Swal.fire({
-        title: "Success!",
+    let res;
+     const {value} = await Swal.fire({
+      title: "Enter Coupon Count",
+      input: "text",
+      inputValidator: async (value) => {
+        if (+value > +item.count) {
+          return "Bigger Than allowed size";
+        }
+      },
+    });
+    if (value) {
+      await Swal.fire({
+        title: "Are you sure you want to proceed?",
         html: `
-        <table className="table custom-table" ref={${contentRef}}>
-          <thead>
-            <tr>
-              <th scope="col">Full Name</th>
-              <th scope="col">Meal</th>
-              <th scope="col">Reservation Code</th>
-              <th scope="col">Count</th>
-              <th scope="col">Resturant</th>
-            </tr>
-          </thead>
-          <tbody>
+            <table className="table custom-table" style="width: 100%">
+              <thead>
                 <tr>
-              <td>${item.fullname}</td>
-              <td>${uMeal}</td>
-              <td>
-                ${item.reservationcode}
-              </td>
-              <td>${item.count}</td>
-             <td> 51 Oak st.</td>
-            </tr>
-          </tbody>
-        </table>
-        `,
+                  <th scope="col">Full Name</th>
+                  <th scope="col">Meal</th>
+                  <th scope="col">Code</th>
+                  <th scope="col">Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                    <tr>
+                  <td>${item.fullname}</td>
+                  <td>${uMeal}</td>
+                  <td>
+                    ${item.reservationcode}
+                  </td>
+                  <td>${item.count}</td>
+                </tr>
+              </tbody>
+            </table>
+            `,
         icon: "info",
-        confirmButtonText: "Print",
+        confirmButtonText: "Save",
+        showCancelButton: true,
         showCloseButton: true,
         showLoaderOnConfirm: true,
         preConfirm: async () => {
-          await reactToPrintFn();
-          setMeal('');
+          res = await updateMeal(id, uMeal, value);
         },
       });
-    } else {
+    }
+    if(res === 'success'){
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -67,17 +64,31 @@ const UpdateButtons = ({ item }) => {
         didOpen: (toast) => {
           toast.onmouseenter = Swal.stopTimer;
           toast.onmouseleave = Swal.resumeTimer;
-        }
+        },
+      });
+      Toast.fire({
+        icon: "success",
+        title: res,
+      });
+    }else{
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
       });
       Toast.fire({
         icon: "error",
-        title: res
+        title: res,
       });
-      setMeal('');
-
     }
   };
-console.log(today, item.lastLunch);
+  console.log(today, item.lastLunch);
   return (
     <form>
       <button
@@ -85,38 +96,18 @@ console.log(today, item.lastLunch);
         disabled={item.lastLunch === today ? true : false}
         formAction={update.bind(null, item.passenger_id, "lunch")}
       >
-        Lunch
+        {item.lastLunch === today && <span>Used</span>}
+        {item.lastLunch !== today && <span>Lunch</span>}
       </button>
       <button
         className="btn btn-primary"
         disabled={item.lastdinner === today ? true : false}
         formAction={update.bind(null, item.passenger_id, "dinner")}
       >
-        Dinner
+        {item.lastdinner === today && <span>Used</span> }
+        {item.lastdinner !== today && <span>Dinner</span> }
       </button>
-      <ToastContainer />
-      <table className={`table custom-table position-absolute ${meal ? 'd-block' : 'd-none'}`} style={{top: '-100000px'}} ref={contentRef}>
-          <thead>
-            <tr>
-              <th scope="col">Full Name</th>
-              <th scope="col">Meal</th>
-              <th scope="col">Reservation Code</th>
-              <th scope="col">Count</th>
-              <th scope="col">Resturant</th>
-            </tr>
-          </thead>
-          <tbody>
-                <tr>
-              <td>{item.fullname}</td>
-              <td>{meal}</td>
-              <td>
-                {item.reservationcode}
-              </td>
-              <td>{item.count}</td>
-             <td> 51 Oak st.</td>
-            </tr>
-          </tbody>
-        </table>
+      
     </form>
   );
 };

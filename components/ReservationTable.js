@@ -1,21 +1,23 @@
 "use client";
 import UpdateButtons from "@/components/UpdateButtons";
+import { getToday } from "@/lib/getToday";
 import { useState } from "react";
 
-const ReservationTable = ({ data }) => {
+const ReservationTable = ({ data, buttons }) => {
   const [pageData, setPageData] = useState(data);
   const [input, setInput] = useState("");
 
-    const handleSearch =(searchPhrase) =>{
-        setInput(searchPhrase);
-        if(searchPhrase === ''){
-            setPageData(data)
-        } else{
-            const temp = data.filter(item => item.fullname.includes(searchPhrase));
-            setPageData(temp);
-        }
+  const handleSearch = (searchPhrase) => {
+    setInput(searchPhrase);
+    if (searchPhrase === "") {
+      setPageData(data);
+    } else {
+      const temp = data.filter((item) => item.fullname.includes(searchPhrase));
+      setPageData(temp);
     }
+  };
 
+  let today = getToday();
   return (
     <div className="container">
       <div className=" w-100  mb-4 ">
@@ -27,7 +29,9 @@ const ReservationTable = ({ data }) => {
                 className="search-input form-control rounded-pill"
                 placeholder="Search Passenger Name"
                 value={input}
-                onChange={(e) =>{handleSearch(e.target.value)}}
+                onChange={(e) => {
+                  handleSearch(e.target.value);
+                }}
               />
               <i className="fas fa-search search-icon"></i>
             </div>
@@ -45,25 +49,27 @@ const ReservationTable = ({ data }) => {
               <th scope="col">Arrival Date</th>
               <th scope="col">Departure Date</th>
               <th scope="col">Hotel Name</th>
-              <th scope="col">Tokens</th>
+              {buttons && <th scope="col">Tokens</th>}
             </tr>
           </thead>
           <tbody>
             {pageData.map((item, index) => {
-              return (
-                <tr key={item.passenger_id}>
-                  <td>{index + 1}</td>
-                  <td>{item.fullname}</td>
-                  <td>{item.count}</td>
-                  <td>{item.reservationcode}</td>
-                  <td>{item.arrivaldate}</td>
-                  <td>{item.departuredate}</td>
-                  <td>{item.hotelname}</td>
-                  <td>
-                    <UpdateButtons item={item} />
-                  </td>
-                </tr>
-              );
+              if (item.departuredate > today) {
+                return (
+                  <tr key={item.passenger_id}>
+                    <td>{index + 1}</td>
+                    <td>{item.fullname}</td>
+                    <td>{item.count}</td>
+                    <td>{item.reservationcode}</td>
+                    <td>{item.arrivaldate}</td>
+                    <td>{item.departuredate}</td>
+                    <td>{item.hotelname}</td>
+                    <td>
+                      {buttons && <UpdateButtons item={item} />}
+                    </td>
+                  </tr>
+                );
+              }
             })}
           </tbody>
         </table>

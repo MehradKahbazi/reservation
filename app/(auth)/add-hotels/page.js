@@ -4,6 +4,11 @@ import { storeHotels } from "@/lib/hotels";
 import { redirect } from "next/navigation";
 
 const AddHotel = async () => {
+  const result = await verifyAuth();
+  
+  if(!result.session){
+    redirect('/login')
+  }
   async function createRecord(formData) {
     "use server";
     const hotelname = formData.get("name");
