@@ -60,7 +60,7 @@ const ReservationForm = ({ data }) => {
       cancelButtonText: "Dismiss",
       width: "50vw",
       preConfirm: async () => {
-        res = await createRecord(formData);
+        res = await createRecord(formData, false);
         console.log(res);
         setEntry({
           clientName,
@@ -132,7 +132,7 @@ const ReservationForm = ({ data }) => {
         cancelButtonText: "Dismiss",
         width: "50vw",
         preConfirm: async () => {
-          res = await createRecord(formData);
+          res = await createRecord(formData, true);
           console.log(res);
           setEntry({
             clientName,

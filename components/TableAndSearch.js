@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 
 const TableAndSearch = ({ data }) => {
   const [pageData, setPageData] = useState(data);
-
   const handleFilter = (formData) => {
     const arrDate = formData.get("arrival");
     const depDate = formData.get("departure");
@@ -27,21 +26,24 @@ const TableAndSearch = ({ data }) => {
   });
 
   const showDetails = async (id) => {
+    console.log(data);
     const logs = await getUserLogs(id);
+    const [passenger] = data.filter(item => item.passenger_id === id)
+    console.log(passenger);
     let tableBody = ``;
     logs.map(item =>{
       tableBody+= `
       <tr>
         <td>${item.username}</td>
         <td>${item.meal}</td>
-        <td>${item.useddinner || item.usedlunch}</td>
+        <td>${item.useddinner || item.usedlunch}/ ${passenger.count}</td>
         <td>${item.date}</td>
         <td>${item.time}</td>
       </tr>
       `
     })
     Swal.fire({
-      title: "Are you sure you want to proceed?",
+      title: "History",
       html: `
           <table className="table custom-table" style="width: 100%">
             <thead>
@@ -61,6 +63,7 @@ const TableAndSearch = ({ data }) => {
       icon: "info",
       showCancelButton: true,
       showCloseButton: true,
+      showConfirmButton: false,
       cancelButtonText: 'dismiss'
     });
   };

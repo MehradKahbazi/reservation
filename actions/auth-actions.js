@@ -2,19 +2,16 @@
 
 import { createAuthSession, destroySession } from "@/lib/auth";
 import { hashUserPassword, verifyPassword } from "@/lib/hash";
-import { createUser, getUserByEmail } from "@/lib/users"; 
+import { createUser, getUserByEmail, resetPassword } from "@/lib/users"; 
 import { redirect } from "next/navigation";
 
-export const signup = async (formData) => {
+export const signup = async (prevState, formData) => {
   const email = formData.get("email");
   const password = formData.get("password");
   const role = formData.get("role");
 
   let errors = {};
 
-  if (!email.includes("@")) {
-    errors.email = "Please enter a valid email address.";
-  }
 
   if (password.trim().length < 8) {
     errors.password = "Password must be at least 8 characters long.";
@@ -70,3 +67,11 @@ export const logout = async () => {
   await destroySession();
   redirect("/login");
 };
+
+
+export const resertPass = async(user) =>{
+  const hashedPassword = hashUserPassword('12345678');
+  resetPassword(user, hashedPassword)
+  console.log(user);
+  return 'success'
+}

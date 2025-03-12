@@ -39,7 +39,7 @@ const UpdateButtons = ({ item }) => {
                   <td>
                     ${item.reservationcode}
                   </td>
-                  <td>${item.count}</td>
+                  <td>${value}</td>
                 </tr>
               </tbody>
             </table>

@@ -1,6 +1,7 @@
 import ReservationTable from "@/components/ReservationTable";
 import { verifyAuth } from "@/lib/auth";
 import { getPassengers } from "@/lib/passengers"; 
+import { redirect } from "next/navigation";
 
 const ReservationList = async() => {
 

@@ -19,8 +19,8 @@ const NaveLinks = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="/add-hotels?role=admin">
-                Add Hotels
+              <Link className="nav-link" href="/settings?role=admin">
+                Settings
               </Link>
             </li>
             <li className="nav-item">

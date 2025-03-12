@@ -6,13 +6,13 @@ import { useState } from "react";
 const ReservationTable = ({ data, buttons }) => {
   const [pageData, setPageData] = useState(data);
   const [input, setInput] = useState("");
-
+console.log(data);
   const handleSearch = (searchPhrase) => {
     setInput(searchPhrase);
     if (searchPhrase === "") {
       setPageData(data);
     } else {
-      const temp = data.filter((item) => item.fullname.includes(searchPhrase));
+      const temp = data.filter((item) => item.fullname.includes(searchPhrase) || item.couponid.includes(searchPhrase));
       setPageData(temp);
     }
   };
@@ -49,6 +49,7 @@ const ReservationTable = ({ data, buttons }) => {
               <th scope="col">Arrival Date</th>
               <th scope="col">Departure Date</th>
               <th scope="col">Hotel Name</th>
+              <th scope="col">Coupon</th>
               {buttons && <th scope="col">Tokens</th>}
             </tr>
           </thead>
@@ -64,6 +65,7 @@ const ReservationTable = ({ data, buttons }) => {
                     <td>{item.arrivaldate}</td>
                     <td>{item.departuredate}</td>
                     <td>{item.hotelname}</td>
+                    <td>{item.couponid}</td>
                     <td>
                       {buttons && <UpdateButtons item={item} />}
                     </td>

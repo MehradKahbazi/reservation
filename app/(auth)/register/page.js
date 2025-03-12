@@ -1,24 +1,60 @@
 "use client";
 
 import { signup } from "@/actions/auth-actions";
-import { ToastContainer, toast } from "react-toastify";
+import { useActionState } from "react";
+import Swal from "sweetalert2";
 
 const Register = () => {
-  // const [formState, formAction] = useActionState(signup, {});
-  const handleSubmit = async (formAction) =>{
-    const res = await signup(formAction);
-    toast.success(res,
-      {
-        position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            theme:'dark' 
-      }
-    )
+  const [formState, formAction] = useActionState(signup, {});
+  console.log(formState);
+
+  if(formState?.errors){
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
+    Toast.fire({
+      icon: "error",
+      title: formState.errors.password,
+    });
+  }else if(formState === "success"){
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
+    Toast.fire({
+      icon: "success",
+      title: 'User Created Successfully',
+    });
   }
+  // const handleSubmit = async (formAction) =>{
+  //   const res = await signup(formAction);
+  //   toast.success(res,
+  //     {
+  //       position: "top-center",
+  //           autoClose: 5000,
+  //           hideProgressBar: false,
+  //           closeOnClick: false,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           theme:'dark' 
+  //     }
+  //   )
+  // }
   return (
     <section className="bg-light p-3 p-md-4 p-xl-5">
       <div className="container">
@@ -40,12 +76,12 @@ const Register = () => {
                       <div className="row">
                         <div className="col-12">
                           <div className="mb-5">
-                            <h4 className="text-center">Add a New Admin</h4>
+                            <h4 className="text-center">Add a New User</h4>
                           </div>
                         </div>
                       </div>
 
-                      <form action={handleSubmit}>
+                      <form action={formAction}>
                         <div className="row gy-3 overflow-hidden">
                           <div className="col-12">
                             <div className="form-floating mb-3">
@@ -58,7 +94,7 @@ const Register = () => {
                                 required
                               />
                               <label htmlFor="email" className="form-label">
-                                Email
+                                User
                               </label>
                             </div>
                           </div>
@@ -108,24 +144,12 @@ const Register = () => {
                                 className="btn btn-theme btn-lg"
                                 type="submit"
                               >
-                                Log in now
+                                Create User
                               </button>
                             </div>
                           </div>
                         </div>
                       </form>
-                      <div className="row">
-                        <div className="col-12">
-                          <div className="d-flex flex-column justify-content-md-center mt-5">
-                            {/* {formState.errors &&
-                              Object.keys(formState.errors).map((error) => (
-                                <small key={error}>
-                                  {formState.errors[error]}
-                                </small>
-                              ))} */}
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -134,7 +158,6 @@ const Register = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </section>
   );
 };
