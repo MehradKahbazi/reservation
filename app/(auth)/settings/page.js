@@ -1,19 +1,19 @@
 import AddHotelForm from "@/components/AddHotelForm";
 import UpdateTimeForm from "@/components/UpdateTimeForm";
 import { verifyAuth } from "@/lib/auth";
-import { getTimes } from "@/lib/hotels";
+import { getHotels, getTimes } from "@/lib/hotels";
 
 import { redirect } from "next/navigation";
 
 const AddHotel = async () => {
   const result = await verifyAuth();
-  const times = getTimes();
-  console.log(times);
   if(!result.session){
     redirect('/login')
   }
+  const [times] = getTimes();
  
-
+  const hotels = getHotels();
+  console.log(hotels);
   return (
     <div className="container">
       <div className="row ">
@@ -37,9 +37,9 @@ const AddHotel = async () => {
           id="form-content"
           className="col-md-8 shadow card border-light-subtle"
         >
-          <AddHotelForm />
+          <AddHotelForm hotels={hotels} />
           <hr />
-          <UpdateTimeForm />
+          <UpdateTimeForm times={times}/>
         </div>
       </div>
     </div>

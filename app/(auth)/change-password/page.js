@@ -1,8 +1,14 @@
 import ResetBtn from "@/components/ResetBtn";
+import { verifyAuth } from "@/lib/auth";
 import { getUsers } from "@/lib/users";
+import { redirect } from "next/navigation";
 
-const ResetPassword = () => {
+const ResetPassword = async() => {
     const users = getUsers();
+    const result = await verifyAuth();
+  if(!result.session){
+    redirect('/login')
+  }
     console.log(users);
     return ( 
         <div className="container">

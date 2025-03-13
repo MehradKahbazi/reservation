@@ -69,8 +69,8 @@ export const logout = async () => {
 };
 
 
-export const resertPass = async(user) =>{
-  const hashedPassword = hashUserPassword('12345678');
+export const resertPass = async(user, newPassword) =>{
+  const hashedPassword = hashUserPassword(newPassword);
   resetPassword(user, hashedPassword)
   console.log(user);
   return 'success'

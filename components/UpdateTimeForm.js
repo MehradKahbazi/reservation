@@ -3,7 +3,7 @@ import { updateTime } from "@/actions/form-actions";
 import { useActionState } from "react";
 import Swal from "sweetalert2";
 
-const UpdateTimeForm = () => {
+const UpdateTimeForm = ({times}) => {
     const [formState, formAction] = useActionState(updateTime, {});
     if(formState?.errors){
         const Toast = Swal.mixin({
@@ -55,6 +55,7 @@ const UpdateTimeForm = () => {
           placeholder="Please Enter Full Name"
           name="lunchstart"
           required
+          defaultValue={times.lunchstart}
         />
       </div>
     </div>
@@ -74,6 +75,7 @@ const UpdateTimeForm = () => {
           placeholder="Please Enter Full Name"
           name="lunchend"
           required
+          defaultValue={times.lunchend}
         />
       </div>
     </div>
@@ -93,6 +95,7 @@ const UpdateTimeForm = () => {
           placeholder="Please Enter Full Name"
           name="dinnerstart"
           required
+          defaultValue={times.dinnerstart}
         />
       </div>
     </div>
@@ -112,6 +115,7 @@ const UpdateTimeForm = () => {
           placeholder="Please Enter Full Name"
           name="dinnerend"
           required
+          defaultValue={times.dinnerend}
         />
       </div>
     </div>

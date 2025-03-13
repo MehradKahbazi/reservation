@@ -5,7 +5,17 @@ import Swal from "sweetalert2";
 
 const ResetBtn = ({item}) => {
     const handleUpdate = async(user) =>{
-        await Swal.fire({
+      const {value} = await Swal.fire({
+        title: "Enter New Password",
+        input: "text",
+        inputValidator: async (value) => {
+          if (value.length < 8) {
+            return "Must be longer than 8 characters";
+          }
+        },
+      });
+        if(value){
+          await Swal.fire({
             title: `Are you sure you want to Reset Password for ${user.username}?`,
             icon: "info",
             confirmButtonText: "Confirm",
@@ -13,7 +23,7 @@ const ResetBtn = ({item}) => {
             showCloseButton: true,
             cancelButtonText: "Dismiss",
             preConfirm: async () => {
-                const res = await resertPass(user);
+                const res = await resertPass(user, value);
                 if(res === 'success'){
                     const Toast = Swal.mixin({
                         toast: true,
@@ -33,6 +43,7 @@ const ResetBtn = ({item}) => {
                 }
             },
           });
+        }
     }
     return ( 
         <form>
