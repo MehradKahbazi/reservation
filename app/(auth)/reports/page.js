@@ -1,8 +1,14 @@
 import TableAndSearch from "@/components/TableAndSearch";
-import { getLogs, getPassengers } from "@/lib/passengers"; 
+import { verifyAuth } from "@/lib/auth";
+import { getPassengers } from "@/lib/passengers"; 
+import { redirect } from "next/navigation";
 
-const Reports = () => {
+const Reports = async() => {
   const data = getPassengers();
+  const result = await verifyAuth();
+  if(!result.session){
+    redirect('/login')
+  }
   return (
     <div className="content">
       <TableAndSearch data={data}/>

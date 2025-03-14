@@ -37,12 +37,11 @@ export async function createRecord(formData, attempt) {
     return { message: "exists", data: res.passenger };
   }
 
-  // redirect('/reservation-list')
 }
 
 export const updateMeal = async (id, meal, value) => {
   const res = updatePassenger(id, meal, value);
-
+  revalidatePath('/', 'layout')
   return res;
 };
 
@@ -50,27 +49,32 @@ export const getUserLogs = async (id) => {
   return getLogs(id);
 };
 
-export const createHotel = async (prevState, formData) => {
+export const createHotel = async (formData) => {
   const hotelname = formData.get("name");
-
-  storeHotels(hotelname);
-  return "success";
+  const res = storeHotels(hotelname);
+  revalidatePath('/', 'layout')
+  return res;
 };
 
-export const updateTime = async (prevState, formData) => {
+export const updateTime = async (formData) => {
   const lunchStart = formData.get("lunchstart");
   const lunchEnd = formData.get("lunchend");
   const dinnerStart = formData.get("dinnerstart");
   const dinnerEnd = formData.get("dinnerend");
-  storeTimes({ lunchStart, lunchEnd, dinnerStart, dinnerEnd });
-  return "success";
+  revalidatePath('/', 'layout');
+  const res = storeTimes({ lunchStart, lunchEnd, dinnerStart, dinnerEnd });
+  return res;
 };
 
 export const removeHotel = async (hotelId) => {
   const res = deleteHotel(hotelId);
-  if (res === "success") {
+  
     revalidatePath("/", "layout");
-    return "success";
-  }
-  return 'not allowed'
+    return res;
+  
 };
+
+
+export const revalidate= async() =>{
+  revalidatePath('/', 'layout');
+}

@@ -13,7 +13,6 @@ const AddHotel = async () => {
   const [times] = getTimes();
  
   const hotels = getHotels();
-  console.log(hotels);
   return (
     <div className="container">
       <div className="row ">

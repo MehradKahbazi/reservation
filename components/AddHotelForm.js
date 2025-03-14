@@ -1,84 +1,23 @@
 "use client";
 
 import { createHotel, removeHotel } from "@/actions/form-actions";
-import { useActionState } from "react";
-import Swal from "sweetalert2";
+import { showToast } from "@/lib/toaster";
+
 
 const AddHotelForm = ({ hotels }) => {
-  const [formState, formAction] = useActionState(createHotel, {});
-  if (formState?.errors) {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      },
-    });
-    Toast.fire({
-      icon: "error",
-      title: formState.errors.password,
-    });
-  } else if (formState === "success") {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      },
-    });
-    Toast.fire({
-      icon: "success",
-      title: "Hotel Added Successfully",
-    });
-  }
 
+  const handleAdd = async (formData) =>{
+    const res = await createHotel(formData)
+    
+      showToast(res)
+  }
   const handleRemove = async(item) =>{
     const res = await removeHotel(item.hotel_id)
-    if(res=== 'success'){
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Hotel Removed Successfully",
-      });
-    } else{
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-      Toast.fire({
-        icon: "error",
-        title: "Not Alowed",
-      });
-    }
+    showToast(res);
   }
 
   return (
-    <form id="survey-form" className="p-3" action={formAction}>
+    <form id="survey-form" className="p-3" action={handleAdd}>
       <div className="row form-group mb-3">
         <div className="col-sm-3">
           <label id="name-label" className="control-label" htmlFor="name">
@@ -101,7 +40,7 @@ const AddHotelForm = ({ hotels }) => {
       <div className="form-group row">
         <div className="col-sm-12 submit-button d-flex align-items-end justify-content-between">
           <ul
-            class="list-group list-group-flush text-start"
+            className="list-group list-group-flush text-start"
             style={{ width: "50%" }}
           >
             {hotels.map((item) => (
@@ -109,7 +48,7 @@ const AddHotelForm = ({ hotels }) => {
                 {item.hotelname}{" "}
                 <button
                   type="button"
-                  class="btn-close"
+                  className="btn-close"
                   aria-label="Close"
                   onClick={handleRemove.bind(null, item)}
                 ></button>

@@ -1,44 +1,44 @@
-"use client";
 
+import { verifyAuth } from "@/lib/auth";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 
-const NaveLinks = () => {
-  const role = useSearchParams().get("role");
+const NaveLinks = async() => {
+  const result = await verifyAuth();
+  console.log(result);
   return (
-    role === "admin" && (
+    result.user.role === "admin" && (
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
           <Link
             className="nav-link"
             aria-current="page"
-            href="/reservation-list?role=admin"
+            href="/reservation-list"
           >
             Reservations
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" href="/create-reservation?role=admin">
+          <Link className="nav-link" href="/create-reservation">
             Make a Reservation
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" href="/settings?role=admin">
+          <Link className="nav-link" href="/settings">
             Settings
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" href="/register?role=admin">
+          <Link className="nav-link" href="/register">
             Create a New Admin
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" href="/reports?role=admin">
+          <Link className="nav-link" href="/reports">
             Report
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" href="/change-password?role=admin">
+          <Link className="nav-link" href="/change-password">
             Change Password
           </Link>
         </li>

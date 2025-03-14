@@ -1,60 +1,15 @@
 "use client";
 
 import { signup } from "@/actions/auth-actions";
-import { useActionState } from "react";
-import Swal from "sweetalert2";
+import { showToast } from "@/lib/toaster";
 
 const Register = () => {
-  const [formState, formAction] = useActionState(signup, {});
-  console.log(formState);
 
-  if(formState?.errors){
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      },
-    });
-    Toast.fire({
-      icon: "error",
-      title: formState.errors.password,
-    });
-  }else if(formState === "success"){
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      },
-    });
-    Toast.fire({
-      icon: "success",
-      title: 'User Created Successfully',
-    });
+  const handleRegister = async(formData) =>{
+    const res = await signup(formData)
+    showToast(res);
   }
-  // const handleSubmit = async (formAction) =>{
-  //   const res = await signup(formAction);
-  //   toast.success(res,
-  //     {
-  //       position: "top-center",
-  //           autoClose: 5000,
-  //           hideProgressBar: false,
-  //           closeOnClick: false,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           theme:'dark' 
-  //     }
-  //   )
-  // }
+
   return (
     <section className="bg-light p-3 p-md-4 p-xl-5">
       <div className="container">
@@ -81,7 +36,7 @@ const Register = () => {
                         </div>
                       </div>
 
-                      <form action={formAction}>
+                      <form action={handleRegister}>
                         <div className="row gy-3 overflow-hidden">
                           <div className="col-12">
                             <div className="form-floating mb-3">

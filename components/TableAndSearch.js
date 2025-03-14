@@ -8,6 +8,14 @@ import Swal from "sweetalert2";
 
 const TableAndSearch = ({ data }) => {
   const [pageData, setPageData] = useState(data);
+  const tableRef = useRef(null);
+
+  const { onDownload } = useDownloadExcel({
+    currentTableRef: tableRef.current,
+    filename: "Users table",
+    sheet: "Users",
+  });
+
   const handleFilter = (formData) => {
     const arrDate = formData.get("arrival");
     const depDate = formData.get("departure");
@@ -17,13 +25,6 @@ const TableAndSearch = ({ data }) => {
     setPageData(filteredData);
   };
 
-  const tableRef = useRef(null);
-
-  const { onDownload } = useDownloadExcel({
-    currentTableRef: tableRef.current,
-    filename: "Users table",
-    sheet: "Users",
-  });
 
   const showDetails = async (id) => {
     console.log(data);

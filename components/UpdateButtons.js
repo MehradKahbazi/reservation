@@ -3,19 +3,26 @@
 import { updateMeal } from "@/actions/form-actions";
 import Swal from "sweetalert2";
 import { getToday } from "@/lib/getToday";
+import { showToast } from "@/lib/toaster";
+import { useRouter } from "next/navigation";
 
 const UpdateButtons = ({ item }) => {
   let today = getToday();
-
   
+
   const update = async (id, uMeal) => {
     let res;
-     const {value} = await Swal.fire({
+    const { value } = await Swal.fire({
       title: "Enter Coupon Count",
       input: "text",
       inputValidator: async (value) => {
+        const regex = /^[0-9]*$/;
+
         if (+value > +item.count) {
           return "Bigger Than allowed size";
+        }
+        if (!regex.test(value)) {
+          return 'Only Numbers Permitted'
         }
       },
     });
@@ -54,41 +61,8 @@ const UpdateButtons = ({ item }) => {
         },
       });
     }
-    if(res === 'success'){
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-      Toast.fire({
-        icon: "success",
-        title: res,
-      });
-    }else{
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-      Toast.fire({
-        icon: "error",
-        title: res,
-      });
-    }
+    showToast({status: res, message: res})
   };
-  console.log(today, item.lastLunch);
   return (
     <form>
       <button
@@ -104,10 +78,9 @@ const UpdateButtons = ({ item }) => {
         disabled={item.lastdinner === today ? true : false}
         formAction={update.bind(null, item.passenger_id, "dinner")}
       >
-        {item.lastdinner === today && <span>Used</span> }
-        {item.lastdinner !== today && <span>Dinner</span> }
+        {item.lastdinner === today && <span>Used</span>}
+        {item.lastdinner !== today && <span>Dinner</span>}
       </button>
-      
     </form>
   );
 };

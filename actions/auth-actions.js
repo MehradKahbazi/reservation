@@ -3,55 +3,37 @@
 import { createAuthSession, destroySession } from "@/lib/auth";
 import { hashUserPassword, verifyPassword } from "@/lib/hash";
 import { createUser, getUserByEmail, resetPassword } from "@/lib/users"; 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const signup = async (prevState, formData) => {
+export const signup = async (formData) => {
   const email = formData.get("email");
   const password = formData.get("password");
   const role = formData.get("role");
 
-  let errors = {};
-
 
   if (password.trim().length < 8) {
-    errors.password = "Password must be at least 8 characters long.";
+    return { status: "error", message: "Password must be at least 8 characters long." }
   }
 
-  if (Object.keys(errors).length > 0) {
-    console.log(errors);
-    return {
-      errors,
-    };
-  }
   const hashedPassword = hashUserPassword(password);
-  createUser(email, hashedPassword, role);
-  return 'success'
+  const res = createUser(email, hashedPassword, role);
+  revalidatePath('/', 'layout');
+  return res;
 };
 
-export const signin = async (prevState, formData) => {
-  console.log(formData);
+export const signin = async (formData) => {
   const email = formData.get("email");
   const password = formData.get("password");
 
   const existingUser = getUserByEmail(email);
-  console.log("existing", existingUser);
-  if (!existingUser) {
-    return {
-      errors: {
-        email: "Could not authenticate user. Please check your credentials",
-      },
-    };
-  }
-
   const isValidPassword = verifyPassword(existingUser.password, password);
 
-  if (!isValidPassword) {
-    return {
-      password: {
-        email: "Could not authenticate user. Please check your credentials",
-      },
-    };
+  if (!existingUser ||!isValidPassword) {
+    return { status: "error", message: "Failed. Please check your credentials" }
+    
   }
+
 
   await createAuthSession(existingUser.id);
   if (existingUser.role === "admin") {
@@ -69,9 +51,8 @@ export const logout = async () => {
 };
 
 
-export const resertPass = async(user, newPassword) =>{
+export const resetPass = async(user, newPassword) =>{
   const hashedPassword = hashUserPassword(newPassword);
-  resetPassword(user, hashedPassword)
-  console.log(user);
-  return 'success'
+  const res = resetPassword(user, hashedPassword)
+  return res;
 }

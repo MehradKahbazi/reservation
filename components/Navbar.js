@@ -1,9 +1,7 @@
 import { logout } from "@/actions/auth-actions";
-import { verifyAuth } from "@/lib/auth";
 import NaveLinks from "./NavLinks";
 
 const Navbar = async () => {
-  
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary p-0">
       <div className="container-fluid bg-header p-2">

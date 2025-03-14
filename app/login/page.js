@@ -1,11 +1,16 @@
 "use client";
 
 import { signin } from "@/actions/auth-actions";
+import { showToast } from "@/lib/toaster";
 import { useActionState } from "react";
 
 const Login = () => {
-  const [formState, formAction] = useActionState(signin, {});
-  
+  const handleLogin = async(formData) =>{
+    const res = await signin(formData);
+    if(res){
+      showToast(res)
+    }
+  }
   return (
     <section className="bg-light p-3 p-md-4 p-xl-5">
       <div className="container">
@@ -34,7 +39,7 @@ const Login = () => {
                         </div>
                       </div>
 
-                      <form action={formAction}>
+                      <form action={handleLogin}>
                         <div className="row gy-3 overflow-hidden">
                           <div className="col-12">
                             <div className="form-floating mb-3">
@@ -94,17 +99,7 @@ const Login = () => {
                           </div>
                         </div>
                       </form>
-                      <div className="row">
-                        <div className="col-12">
-                          <div className="d-flex flex-column justify-content-md-center mt-5">
-                            {formState && formState.errors && Object.keys(formState.errors).map((error) => (
-                              <small key={error}>
-                                {formState.errors[error]}
-                              </small>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
+                      
                     </div>
                   </div>
                 </div>

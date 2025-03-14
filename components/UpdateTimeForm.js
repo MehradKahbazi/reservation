@@ -1,44 +1,14 @@
 'use client';
 import { updateTime } from "@/actions/form-actions";
-import { useActionState } from "react";
-import Swal from "sweetalert2";
+import { showToast } from "@/lib/toaster";
+
 
 const UpdateTimeForm = ({times}) => {
-    const [formState, formAction] = useActionState(updateTime, {});
-    if(formState?.errors){
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "error",
-          title: formState.errors.password,
-        });
-      }else if(formState === "success"){
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "success",
-          title: 'Times Updated Successfully',
-        });
-      }
-    return ( <form id="survey-form" className="p-3" action={formAction}>
+   const handleUpdateTimes = async(formData) =>{
+    const res = await updateTime(formData)
+    showToast(res);
+   }
+    return ( <form id="survey-form" className="p-3" action={handleUpdateTimes}>
     <div className="row form-group mb-3">
       <div className="col-sm-3">
         <label id="name-label" className="control-label" htmlFor="lunchstart">
