@@ -1,4 +1,4 @@
-import ResetBtn from "@/components/ResetBtn";
+import ChangeBtn from "@/components/ChangeBtn";
 import { verifyAuth } from "@/lib/auth";
 import { getUsers } from "@/lib/users";
 import { redirect } from "next/navigation";
@@ -9,18 +9,17 @@ const ResetPassword = async() => {
   if(!result.session){
     redirect('/login')
   }
-    console.log(users);
     return ( 
         <div className="container">
       
       <div className="table-responsive mt-5">
-        <table className="table custom-table">
+        <table className="table custom-table mt-5">
           <thead>
             <tr>
               <th scope="col">id</th>
               <th scope="col">UserName</th>
               <th scope="col">Role</th>
-              <th scope="col">Actions</th>
+              <th scope="col" className="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -29,7 +28,7 @@ const ResetPassword = async() => {
                     <td>{item.id}</td>
                     <td>{item.username}</td>
                     <td>{item.role}</td>
-                    <td><ResetBtn item={item} /></td>
+                    <td className="text-center"><ChangeBtn item={item} /></td>
                     
                   </tr>
                 )              

@@ -1,6 +1,6 @@
 "use server";
 
-import { getLogs, storePassenger, updatePassenger } from "@/lib/passengers";
+import { getLogs, getPassengers, removePassenger, storePassenger, updatePassenger } from "@/lib/passengers";
 import { deleteHotel, storeHotels, storeTimes } from "@/lib/hotels";
 
 import { revalidatePath } from "next/cache";
@@ -66,6 +66,11 @@ export const updateTime = async (formData) => {
   return res;
 };
 
+export const getAllPassengers = async() =>{
+  const res = getPassengers()
+  return res;
+}
+
 export const removeHotel = async (hotelId) => {
   const res = deleteHotel(hotelId);
   
@@ -75,6 +80,4 @@ export const removeHotel = async (hotelId) => {
 };
 
 
-export const revalidate= async() =>{
-  revalidatePath('/', 'layout');
-}
+

@@ -4,11 +4,10 @@ import { updateMeal } from "@/actions/form-actions";
 import Swal from "sweetalert2";
 import { getToday } from "@/lib/getToday";
 import { showToast } from "@/lib/toaster";
-import { useRouter } from "next/navigation";
 
 const UpdateButtons = ({ item }) => {
   let today = getToday();
-  
+
 
   const update = async (id, uMeal) => {
     let res;
@@ -27,7 +26,7 @@ const UpdateButtons = ({ item }) => {
       },
     });
     if (value) {
-      await Swal.fire({
+       Swal.fire({
         title: "Are you sure you want to proceed?",
         html: `
             <table className="table custom-table" style="width: 100%">
@@ -58,17 +57,17 @@ const UpdateButtons = ({ item }) => {
         showLoaderOnConfirm: true,
         preConfirm: async () => {
           res = await updateMeal(id, uMeal, value);
+          showToast(res)
         },
       });
     }
-    showToast({status: res, message: res})
   };
   return (
-    <form>
+    <>
       <button
         className="btn btn-warning me-2"
         disabled={item.lastLunch === today ? true : false}
-        formAction={update.bind(null, item.passenger_id, "lunch")}
+        onClick={update.bind(null, item.passenger_id, "lunch")}
       >
         {item.lastLunch === today && <span>Used</span>}
         {item.lastLunch !== today && <span>Lunch</span>}
@@ -76,12 +75,12 @@ const UpdateButtons = ({ item }) => {
       <button
         className="btn btn-primary"
         disabled={item.lastdinner === today ? true : false}
-        formAction={update.bind(null, item.passenger_id, "dinner")}
+        onClick={update.bind(null, item.passenger_id, "dinner")}
       >
         {item.lastdinner === today && <span>Used</span>}
         {item.lastdinner !== today && <span>Dinner</span>}
       </button>
-    </form>
+    </>
   );
 };
 

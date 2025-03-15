@@ -1,10 +1,10 @@
 "use client";
 
-import { resertPass, resetPass } from "@/actions/auth-actions";
+import { resetPass } from "@/actions/auth-actions";
 import { showToast } from "@/lib/toaster";
 import Swal from "sweetalert2";
 
-const ResetBtn = ({ item }) => {
+const ChangeBtn = ({ item }) => {
   const handleUpdate = async (user) => {
     const { value } = await Swal.fire({
       title: "Enter New Password",
@@ -31,15 +31,14 @@ const ResetBtn = ({ item }) => {
     }
   };
   return (
-    <form>
+    <form className="d-inline" action={handleUpdate.bind(null, item)}>
       <button
         className="btn btn-info"
-        formAction={handleUpdate.bind(null, item)}
       >
-        Reset Password
+        Change Password
       </button>
     </form>
   );
 };
 
-export default ResetBtn;
+export default ChangeBtn;

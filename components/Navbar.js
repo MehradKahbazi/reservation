@@ -3,7 +3,7 @@ import NaveLinks from "./NavLinks";
 
 const Navbar = async () => {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary p-0">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary p-0 position-fixed w-100 z-2 top-0">
       <div className="container-fluid bg-header p-2">
         <a className="navbar-brand" href="#">
           Navbar

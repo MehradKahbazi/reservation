@@ -1,14 +1,8 @@
-"use client";
 
-import { signup } from "@/actions/auth-actions";
-import { showToast } from "@/lib/toaster";
+import AuthForm from "@/components/AuthForm";
+import Image from "next/image";
 
 const Register = () => {
-
-  const handleRegister = async(formData) =>{
-    const res = await signup(formData)
-    showToast(res);
-  }
 
   return (
     <section className="bg-light p-3 p-md-4 p-xl-5">
@@ -18,11 +12,12 @@ const Register = () => {
             <div className="card border-light-subtle shadow-sm">
               <div className="row g-0">
                 <div className="col-12 col-md-6">
-                  <img
+                <Image
                     className="img-fluid rounded-start w-100 h-100 object-fit-cover"
-                    loading="lazy"
-                    src="./login.jpg"
+                    src="/user.jpg"
                     alt="Welcome back you've been missed!"
+                    width={600}
+                    height={600}
                   />
                 </div>
                 <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
@@ -35,76 +30,7 @@ const Register = () => {
                           </div>
                         </div>
                       </div>
-
-                      <form action={handleRegister}>
-                        <div className="row gy-3 overflow-hidden">
-                          <div className="col-12">
-                            <div className="form-floating mb-3">
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="email"
-                                id="email"
-                                placeholder="name@example.com"
-                                required
-                              />
-                              <label htmlFor="email" className="form-label">
-                                User
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-12">
-                            <div className="form-floating mb-3">
-                              <input
-                                type="password"
-                                className="form-control"
-                                name="password"
-                                id="password"
-                                placeholder="Password"
-                                required
-                              />
-                              <label htmlFor="password" className="form-label">
-                                Password
-                              </label>
-                            </div>
-                          </div>
-                          
-                          <div className="form-group row mb-3">
-                            <div className="col-sm-3">
-                              <label
-                                className="control-label"
-                                htmlFor="role"
-                              >
-                                Role:
-                              </label>
-                            </div>
-
-                            <div className="input-group col-sm-9">
-                              <div className="input-group-prepend"></div>
-
-                              <select
-                                className="form-select"
-                                name="role"
-                                id="role"
-                              >
-                                <option value="admin">Admin</option>
-                                <option value="cashier">Cashier</option>
-                                <option value="operator">Operator</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="col-12">
-                            <div className="d-grid">
-                              <button
-                                className="btn btn-theme btn-lg"
-                                type="submit"
-                              >
-                                Create User
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </form>
+                      <AuthForm method={'register'} />
                     </div>
                   </div>
                 </div>

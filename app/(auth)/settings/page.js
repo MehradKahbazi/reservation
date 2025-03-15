@@ -2,6 +2,7 @@ import AddHotelForm from "@/components/AddHotelForm";
 import UpdateTimeForm from "@/components/UpdateTimeForm";
 import { verifyAuth } from "@/lib/auth";
 import { getHotels, getTimes } from "@/lib/hotels";
+import Image from "next/image";
 
 import { redirect } from "next/navigation";
 
@@ -23,12 +24,13 @@ const AddHotel = async () => {
             <p id="description" className="lead">
               We really value your opinion
             </p>
-            <img
-              className="img-fluid rounded-start w-100 h-100 object-fit-cover"
-              loading="lazy"
-              src="./login.jpg"
-              alt="Welcome back you've been missed!"
-            />
+            <Image
+                    className="img-fluid rounded-start w-100 h-100 object-fit-cover"
+                    src="/resturant1.jpg"
+                    alt="Welcome back you've been missed!"
+                    width={600}
+                    height={600}
+                  />
           </div>
         </div>
 

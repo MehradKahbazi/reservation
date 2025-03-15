@@ -37,12 +37,13 @@ export const signin = async (formData) => {
 
   await createAuthSession(existingUser.id);
   if (existingUser.role === "admin") {
-    redirect("/reservation-list?role=admin");
+    redirect("/reservation-list");
   } else if (existingUser.role === "operator") {
     redirect("/create-reservation");
   } else if (existingUser.role === "cashier") {
     redirect("/reservation-list");
   }
+  
 };
 
 export const logout = async () => {

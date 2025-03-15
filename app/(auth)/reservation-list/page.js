@@ -1,6 +1,6 @@
+import { getAllPassengers } from "@/actions/form-actions";
 import ReservationTable from "@/components/ReservationTable";
 import { verifyAuth } from "@/lib/auth";
-import { getPassengers } from "@/lib/passengers"; 
 import { redirect } from "next/navigation";
 
 const ReservationList = async() => {
@@ -9,7 +9,7 @@ const ReservationList = async() => {
   if(!result.session){
     redirect('/login')
   }
-  const data = getPassengers();
+  const data = await getAllPassengers();
   return (
     <div className="content">
     

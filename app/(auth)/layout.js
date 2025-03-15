@@ -24,7 +24,7 @@ export default async function AuthLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <header>
+        <header className="mb-5">
             <Navbar />
         </header>
         {children}

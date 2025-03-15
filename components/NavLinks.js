@@ -4,7 +4,6 @@ import Link from "next/link";
 
 const NaveLinks = async() => {
   const result = await verifyAuth();
-  console.log(result);
   return (
     result.user.role === "admin" && (
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">

@@ -1,6 +1,7 @@
 import ReservationForm from "@/components/ReservationForm";
 import { verifyAuth } from "@/lib/auth";
 import { getHotels } from "@/lib/hotels"; 
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 
@@ -18,10 +19,11 @@ const CreateReservation = async () => {
             <i className="fa fa-envelope fa-5x"></i>
             <h2>How Are We Doing?</h2>
             
-            <img
+            <Image
               className="img-fluid rounded-start w-100 h-100 object-fit-cover"
-              loading="lazy"
-              src="./login.jpg"
+              src="/login.jpg"
+              width={600}
+              height={600}
               alt="Welcome back you've been missed!"
             />
           </div>
